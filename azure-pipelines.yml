@@ -22,15 +22,8 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-- task: NuGetCommand@2
-  inputs:
-    command: 'pack'
+    command: 'build'
     feedsToUse: 'select'
-    packagesToPack: '**/*.csproj'
     versioningScheme: 'off'
-    includeSymbols: true
