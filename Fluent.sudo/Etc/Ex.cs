@@ -23,15 +23,11 @@
 
         public static T When<T>(this FileInfo info, Func<FileInfo, bool> condition, Func<FileInfo, T> actor) 
             => condition(info) ? actor(info) : default;
-
+        /// <summary>
+        /// Escape text
+        /// </summary>
         public static string E(this string s, char c) => $"{c}{s}{c}";
- 
         public static string ReadAll(this FileInfo info) => File.ReadAllText(info.FullName);
-
-        public static string Combine(this string s1, params string[] str)
-        {
-            var temp = str.Aggregate(s1, Path.Combine);
-        }
     }
 
 
