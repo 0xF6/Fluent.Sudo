@@ -17,7 +17,7 @@
         private readonly ILogger<Windows> log;
         public Windows() => log = Log.Get<Windows>();
 
-        public async Task<ExecuteResult> Execute(string cmd, TimeSpan timeoutWait, TimeSpan timeoutExecute)
+        public async Task<ExecuteResult> Execute(string cmd, TimeSpan timeoutWait)
         {
             var tmp = Path.GetTempPath();
             var uid = Guid.NewGuid().ToString();
