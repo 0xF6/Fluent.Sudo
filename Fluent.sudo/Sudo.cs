@@ -14,7 +14,7 @@
             if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 return await new Linux().Execute(cmd, TimeoutWait);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                return await new MacOS().Execute(cmd, TimeoutWait);
+                throw new NotSupportedException($"Temporarily not supported."); //return await new MacOS().Execute(cmd, TimeoutWait);
             return null;
         }
 
