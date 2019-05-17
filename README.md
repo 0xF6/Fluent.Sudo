@@ -12,7 +12,7 @@ Sudo.Exec("echo lol");
 - [x] Linux Implementation
 - [ ] MacOS Implementation
 - [ ] In windows use `powershell`
-- [ ] In linux user `PolicyKit` when detected `pkexec`
+- [ ] In linux use `PolicyKit` when detected `pkexec`
 
 
 ### Example
