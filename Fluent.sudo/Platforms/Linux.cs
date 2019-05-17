@@ -15,13 +15,14 @@
 
         public async Task<ExecuteResult> Execute(string cmd, TimeSpan timeoutWait)
         {
+            log.LogInformation($"Starting execute in linux...");
             var bin_box = new[] {"/usr/bin/kdesudo", "/usr/bin/pkexec"}.Where(x => x.AsFile().Exists);
 
             if(!bin_box.Any())
                 return new ExecuteResult(ElevateResult.UNK, "", "kdesudo/pkexec not found.", "-1");
 
             var bin = bin_box.First();
-
+            log.LogInformation($"Detected '{bin}'..");
             var command = new List<string>();
 
             if (bin.Contains("kdesudo"))
@@ -32,25 +33,25 @@
             }
             else if (bin.Contains("pkexec"))
                 command.Add("--disable-internal-agent");
-            command.Add($"\"{cmd}\"");
+            command.Add($"{cmd}");
 
             var proc = new Process
             {
                 StartInfo = new ProcessStartInfo(bin, string.Join(" ", command))
                 {
-                    RedirectStandardOutput = true, RedirectStandardError = true
+                    //RedirectStandardOutput = true, RedirectStandardError = true
                 }
             };
-
+            log.LogInformation($"Starting process '{bin}' when args '{string.Join(" ", command)}'...");
 
             await proc.WaitForExitAsync();
 
             var stderr = await proc.StandardError.ReadToEndAsync();
             var stdout = await proc.StandardOutput.ReadToEndAsync();
-
+            log.LogInformation($"Complete execute {bin}..");
             var result = ElevateResult.UNK;
 
-            if (stderr.Contains("Request dismissed") || stderr.Contains("Command failed"))
+            if (stderr.Contains("Request dismissed") || stderr.Contains("Command failed") || stderr.Contains("Not authorized"))
                 result = ElevateResult.PERMISSION_DENIED;
             else if (stderr.Any())
                 result = ElevateResult.ERROR;

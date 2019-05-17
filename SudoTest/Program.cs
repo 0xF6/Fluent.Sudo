@@ -1,8 +1,13 @@
 ﻿namespace SudoTest
 {
     using System;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Fluent.sudo;
+    using Flurl.Http;
+    using MoreLinq;
     using static System.Console;
     using static ObjectDumper;
 
@@ -10,13 +15,12 @@
     {
         public static async Task Main(string[] args)
         {
-            Title = "SudoTest";
+            //WriteLine($"Start testing...");
+            //var result = await Sudo.Exec("echo test");
 
-            var result = await Sudo.Exec("echo test");
+            //WriteLine(Dump(result));
 
-            WriteLine(Dump(result));
-
-            ReadKey();
+            //ReadKey();
         }
     }
 }
